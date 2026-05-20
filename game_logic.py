@@ -41,7 +41,9 @@ class ScoreBox:
     def DiceValuesToArr(self):
         arr = []
         for i in vars(self).values():
-           arr.append(i.value)
+            if (type(i) != Dice):
+                break
+            arr.append(i.value)
         return arr
 
     def CountEachVal(self):
@@ -79,6 +81,13 @@ class ScoreBox:
             if (num == (4 + smallOrLarge)):
                 return 1
         return 0
+
+    def NewDice(self, d1, d2, d3, d4, d5):
+        self.d1 = d1
+        self.d2 = d2
+        self.d3 = d3
+        self.d4 = d4
+        self.d5 = d5
  
     filled = 0
     score = 0
@@ -253,17 +262,21 @@ class ScoreYahtzee(ScoreBox):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
-        if (self.SetOfX(5,0) == 1):
-            score = 50
-        else:
-            score = 0
+        score = self.ScoreCalc()
         return super().FillBox(score)
 
-    def Checkmark(self):
-        if ((self.SetOfX(5,0) == 1) and (self.filled == 1)):
-            if (not (self.score == 0)):
-                self.score += 100
-
     def ScoreCalc(self):
+        if (self.SetOfX(5,0) == 1):
+            score = 50 # score = 50 if first time filling
+            if (self.filled == 1 and self.score != 0):  # if not first time filling and didnt fill in 0, add 100 to the filled in score and return that
+                score = self.score + 100
+                self.filled = 0 # needed so box can be refilled
+        else:
+            score = 0
+        return score
+
+
+            
+        
 
 

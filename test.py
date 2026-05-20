@@ -13,9 +13,9 @@ def main():
     d9 = gl.Dice(5)
     d10 = gl.Dice(5)
 
-    d11 = gl.Dice(3)
-    d12 = gl.Dice(4)
-    d13 = gl.Dice(5)
+    d11 = gl.Dice(6)
+    d12 = gl.Dice(6)
+    d13 = gl.Dice(6)
     d14 = gl.Dice(6)
     d15 = gl.Dice(6)
 
@@ -126,9 +126,26 @@ def main():
     print("bschance FillBox(): ", box_scorechance.FillBox())
     print("bschance.score: ", box_scorechance.score)
  
-    box_scoreyaht = gl.ScoreYahtzee(d1,d2,d3,d4,d5)
+    box_scoreyaht = gl.ScoreYahtzee(d11,d12,d13,d14,d15)
     print("bsyaht FillBox(): ", box_scoreyaht.FillBox())
     print("bsyaht.score: ", box_scoreyaht.score)
+
+    print("bsyaht FillBox(): ", box_scoreyaht.FillBox())
+    print("bsyaht.score: ", box_scoreyaht.score)
+
+    box_scoreyaht.NewDice(d1,d2,d3,d4,d5)
+    print("bsyaht FillBox(): ", box_scoreyaht.FillBox())
+    print("bsyaht.score: ", box_scoreyaht.score)
+    print("bsyaht FillBox(): ", box_scoreyaht.FillBox())
+    print("bsyaht.score: ", box_scoreyaht.score)
+
+    box_scoreyaht.NewDice(d11,d12,d13,d14,d15)
+    print("bsyaht FillBox(): ", box_scoreyaht.FillBox())
+    print("bsyaht.score: ", box_scoreyaht.score)
+    print("bsyaht FillBox(): ", box_scoreyaht.FillBox())
+    print("bsyaht.score: ", box_scoreyaht.score)
+
+
 
 if __name__ == "__main__":
     main()
