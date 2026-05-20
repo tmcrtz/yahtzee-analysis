@@ -33,7 +33,7 @@ class ScoreBox:
 
     def GetConstDiceValues(self, target):
         count = 0
-        for i in vars(self).values(): # will include filled and score, so need to filter, maybe just -2?
+        for i in vars(self).values():
             if (i.value == target): 
                 count += 1
         return count
@@ -88,16 +88,24 @@ class Score1(ScoreBox):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
-        score = self.GetConstDiceValues(1)
+        score = self.ScoreCalc()
         return super().FillBox(score)
+
+    def ScoreCalc(self):
+        score = self.GetConstDiceValues(1)
+        return score
 
 class Score2(ScoreBox):
     def __init__(self, d1, d2, d3, d4, d5):
         super().__init__(d1, d2, d3, d4, d5)
         
     def FillBox(self, score=None):
-        score = self.GetConstDiceValues(2)
+        score = self.ScoreCalc()
         return super().FillBox(score)
+
+    def ScoreCalc(self):
+        score = self.GetConstDiceValues(2)
+        return score
 
 
 class Score3(ScoreBox):
@@ -105,8 +113,12 @@ class Score3(ScoreBox):
         super().__init__(d1, d2, d3, d4, d5)
         
     def FillBox(self, score=None):
-        score = self.GetConstDiceValues(3)
+        score = self.ScoreCalc()
         return super().FillBox(score)
+
+    def ScoreCalc(self):
+        score = self.GetConstDiceValues(3)
+        return score
 
 
 class Score4(ScoreBox):
@@ -114,88 +126,127 @@ class Score4(ScoreBox):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
-        score = self.GetConstDiceValues(4)
+        score = self.ScoreCalc()
         return super().FillBox(score)
 
+    def ScoreCalc(self):
+        score = self.GetConstDiceValues(4)
+        return score
 
 class Score5(ScoreBox):
     def __init__(self, d1, d2, d3, d4, d5):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
-        score = self.GetConstDiceValues(5)
+        score = self.ScoreCalc()
         return super().FillBox(score)
+
+    def ScoreCalc(self):
+        score = self.GetConstDiceValues(5)
+        return score
 
 class Score6(ScoreBox):
     def __init__(self, d1, d2, d3, d4, d5):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
-        score = self.GetConstDiceValues(6)
+        score = self.ScoreCalc()
         return super().FillBox(score)
+
+    def ScoreCalc(self):
+        score = self.GetConstDiceValues(6)
+        return score
 
 class Score3OfAKind(ScoreBox):
     def __init__(self, d1, d2, d3, d4, d5):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
+        score = self.ScoreCalc()
+        return super().FillBox(score)
+
+    def ScoreCalc(self):
         if (self.SetOfX(3, 1) == 1):
             score = self.AddAllDiceValues()
         else:
             score = 0
-        return super().FillBox(score)
+        return score
  
 class Score4OfAKind(ScoreBox):
     def __init__(self, d1, d2, d3, d4, d5):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
+        score = self.ScoreCalc()
+        return super().FillBox(score)
+
+    def ScoreCalc(self):
         if (self.SetOfX(4, 0) == 1):
             score = self.AddAllDiceValues()
         else:
             score = 0
-        return super().FillBox(score)
+        return score
+
 
 class ScoreFullHouse(ScoreBox):
     def __init__(self, d1, d2, d3, d4, d5):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
+        score = self.ScoreCalc()
+        return super().FillBox(score)
+
+    def ScoreCalc(self):
         if ((self.SetOfX(3, 0) == 1) and (self.SetOfX(2, 0) == 1)):
             score = 25
         else:
             score = 0
-        return super().FillBox(score)
+        return score
+
 
 class ScoreSmallStraight(ScoreBox):
     def __init__(self, d1, d2, d3, d4, d5):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
+        score = self.ScoreCalc()
+        return super().FillBox(score)
+
+    def ScoreCalc(self):
         if (self.CheckStraight(0) == 1):
             score = 30
         else:
             score = 0
-        return super().FillBox(score)
+        return score
+
 
 class ScoreLargeStraight(ScoreBox):
     def __init__(self, d1, d2, d3, d4, d5):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
+        score = self.ScoreCalc()
+        return super().FillBox(score)
+
+    def ScoreCalc(self):
         if (self.CheckStraight(1) == 1):
             score = 30
         else:
             score = 0
-        return super().FillBox(score)
+        return score
+
 
 class ScoreChance(ScoreBox):
     def __init__(self, d1, d2, d3, d4, d5):
         super().__init__(d1, d2, d3, d4, d5)
 
     def FillBox(self, score=None):
-        score = self.AddAllDiceValues()
+        score = self.ScoreCalc()
         return super().FillBox(score)
+
+    def ScoreCalc(self):
+        score = self.AddAllDiceValues()
+        return score
 
 class ScoreYahtzee(ScoreBox):
     def __init__(self, d1, d2, d3, d4, d5):
@@ -212,7 +263,7 @@ class ScoreYahtzee(ScoreBox):
         if ((self.SetOfX(5,0) == 1) and (self.filled == 1)):
             if (not (self.score == 0)):
                 self.score += 100
-            else:
-                pass # box filled with 0 but rolled yahtzee, need new method for joker rules
+
+    def ScoreCalc(self):
 
 
