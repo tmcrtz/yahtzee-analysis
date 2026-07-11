@@ -275,8 +275,38 @@ class ScoreYahtzee(ScoreBox):
             score = 0
         return score
 
+class GameSetup:
+    def __init__(self):
+        d1 = Dice()
+        d2 = Dice()
+        d3 = Dice()
+        d4 = Dice()
+        d5 = Dice()
+        dice = [d1, d2, d3, d4, d5]
 
-            
+        s1 = Score1(*dice)
+        s2 = Score2(*dice)
+        s3 = Score3(*dice)
+        s4 = Score4(*dice)
+        s5 = Score5(*dice)
+        s6 = Score6(*dice)
+        s3k = Score3OfAKind(*dice)
+        s4k = Score4OfAKind(*dice)
+        sfh = ScoreFullHouse(*dice)
+        sss = ScoreSmallStraight(*dice)
+        sls = ScoreLargeStraight(*dice)
+        sc = ScoreChance(*dice)
+        sy = ScoreYahtzee(*dice)
+        scores = [s1, s2, s3, s4, s5, s6, s3k, s4k, sfh, sss, sls, sc, sy]
         
+    def ScoreCalcAll(self, dice):
+        class Node
+            def __init__(self, data):
+                self.data = data
+                self.left = None
+                self.right = None
+                self.count = 1
+                self.name = []
 
+                
 
