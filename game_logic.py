@@ -300,13 +300,25 @@ class GameSetup:
         scores = [s1, s2, s3, s4, s5, s6, s3k, s4k, sfh, sss, sls, sc, sy]
         
     def ScoreCalcAll(self, dice):
-        class Node
+        class Node:
             def __init__(self, data):
-                self.data = data
+                self.data = {"type": type(data), "data": data}
                 self.left = None
                 self.right = None
                 self.count = 1
-                self.name = []
 
-                
+        def insert(root: Node, data):
+            if (root == None):
+                return Node(data)
+            if (root.data["data"] > data):
+                root.left = insert(root.left, data)
+            if (root.data["data"] < data):
+                root.right = insert(root.right, data)
+            else:
+                root.count += 1                                                 # if multiple scoreboxes have the same score
+                if (type(root.data["type"]) is not set):                        # then we can keep track of which are similar without
+                    root.data.update({"type": {root.data["type"], type(data)}}) # making the tree larger
+                else:
+                    root.data["type"].add(type(data))
+            return root
 
