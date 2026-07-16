@@ -282,24 +282,24 @@ class GameSetup:
         d3 = Dice()
         d4 = Dice()
         d5 = Dice()
-        dice = [d1, d2, d3, d4, d5]
+        self.dice = [d1, d2, d3, d4, d5]
 
-        s1 = Score1(*dice)
-        s2 = Score2(*dice)
-        s3 = Score3(*dice)
-        s4 = Score4(*dice)
-        s5 = Score5(*dice)
-        s6 = Score6(*dice)
-        s3k = Score3OfAKind(*dice)
-        s4k = Score4OfAKind(*dice)
-        sfh = ScoreFullHouse(*dice)
-        sss = ScoreSmallStraight(*dice)
-        sls = ScoreLargeStraight(*dice)
-        sc = ScoreChance(*dice)
-        sy = ScoreYahtzee(*dice)
-        scores = [s1, s2, s3, s4, s5, s6, s3k, s4k, sfh, sss, sls, sc, sy]
+        s1 = Score1(*self.dice)
+        s2 = Score2(*self.dice)
+        s3 = Score3(*self.dice)
+        s4 = Score4(*self.dice)
+        s5 = Score5(*self.dice)
+        s6 = Score6(*self.dice)
+        s3k = Score3OfAKind(*self.dice)
+        s4k = Score4OfAKind(*self.dice)
+        sfh = ScoreFullHouse(*self.dice)
+        sss = ScoreSmallStraight(*self.dice)
+        sls = ScoreLargeStraight(*self.dice)
+        sc = ScoreChance(*self.dice)
+        sy = ScoreYahtzee(*self.dice)
+        self.scores = [s1, s2, s3, s4, s5, s6, s3k, s4k, sfh, sss, sls, sc, sy]
         
-    def ScoreCalcAll(self, dice):
+    def ScoreCalcAll(self):
         class Node:
             def __init__(self, data):
                 self.data = {"type": type(data), "data": data}
@@ -307,12 +307,13 @@ class GameSetup:
                 self.right = None
                 self.count = 1
 
-        def insert(root: Node, data):
+        def insert(root: Node, data: ScoreBox):
+            score = data.ScoreCalc()
             if (root == None):
-                return Node(data)
-            if (root.data["data"] > data):
+                return Node(score)
+            if (root.data["data"] > score):
                 root.left = insert(root.left, data)
-            if (root.data["data"] < data):
+            if (root.data["data"] < score):
                 root.right = insert(root.right, data)
             else:
                 root.count += 1                                                 # if multiple scoreboxes have the same score
@@ -321,4 +322,18 @@ class GameSetup:
                 else:
                     root.data["type"].add(type(data))
             return root
+
+        def inorder(root):
+            if root:
+                inorder(root.left)
+                print(root.data["data"], root.data["type"])
+                inorder(root.right)
+
+        bst = None
+        for box in self.scores:
+            bst = insert(bst, box)
+
+        inorder(bst)
+
+
 

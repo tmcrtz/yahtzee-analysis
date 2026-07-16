@@ -145,6 +145,13 @@ def main():
     print("bsyaht FillBox(): ", box_scoreyaht.FillBox())
     print("bsyaht.score: ", box_scoreyaht.score)
 
+#box_score1, box_score2, box_score3, box_score4, box_score5, box_score6, box_score3kind, box_score4kind, box_scorefh, box_scoress, box_scorels, box_scorechance, box_scoreyaht, 
+
+    print("==========TEST GAMESETUP CLASS==========")
+
+    game1 = gl.GameSetup()
+    game1.ScoreCalcAll()
+
 
 
 if __name__ == "__main__":
