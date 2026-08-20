@@ -1,19 +1,14 @@
 import random
 
 class Dice:
-    def __init__(self, value=random.randint(1,6)):
+    def __init__(self, value=random.choice(range(1, 7))):
         if (1<= value <= 6):
             self.value = value
-        else:
-            value = random.randint(1,6)
-    
-    def Reroll(self):
-        if (self.rerolls > 0 and self.held != 0):
-            self.value = random.randint(1, 6)
-            self.rerolls -= 1
 
-    rerolls = 3
     held = 0
+
+def RerollDice(self):
+    pass
 
 class ScoreBox:
     def __init__(self, d1, d2, d3, d4, d5):
@@ -101,7 +96,7 @@ class Score1(ScoreBox):
         return super().FillBox(score)
 
     def ScoreCalc(self):
-        score = self.GetConstDiceValues(1)
+        score = 1 * self.GetConstDiceValues(1)
         return score
 
 class Score2(ScoreBox):
@@ -113,7 +108,7 @@ class Score2(ScoreBox):
         return super().FillBox(score)
 
     def ScoreCalc(self):
-        score = self.GetConstDiceValues(2)
+        score = 2 * self.GetConstDiceValues(2)
         return score
 
 
@@ -126,7 +121,7 @@ class Score3(ScoreBox):
         return super().FillBox(score)
 
     def ScoreCalc(self):
-        score = self.GetConstDiceValues(3)
+        score = 3 * self.GetConstDiceValues(3)
         return score
 
 
@@ -139,7 +134,7 @@ class Score4(ScoreBox):
         return super().FillBox(score)
 
     def ScoreCalc(self):
-        score = self.GetConstDiceValues(4)
+        score = 4 * self.GetConstDiceValues(4)
         return score
 
 class Score5(ScoreBox):
@@ -151,7 +146,7 @@ class Score5(ScoreBox):
         return super().FillBox(score)
 
     def ScoreCalc(self):
-        score = self.GetConstDiceValues(5)
+        score = 5 * self.GetConstDiceValues(5)
         return score
 
 class Score6(ScoreBox):
@@ -163,7 +158,7 @@ class Score6(ScoreBox):
         return super().FillBox(score)
 
     def ScoreCalc(self):
-        score = self.GetConstDiceValues(6)
+        score = 6 * self.GetConstDiceValues(6)
         return score
 
 class Score3OfAKind(ScoreBox):
@@ -190,7 +185,7 @@ class Score4OfAKind(ScoreBox):
         return super().FillBox(score)
 
     def ScoreCalc(self):
-        if (self.SetOfX(4, 0) == 1):
+        if (self.SetOfX(4, 1) == 1):
             score = self.AddAllDiceValues()
         else:
             score = 0
@@ -277,11 +272,12 @@ class ScoreYahtzee(ScoreBox):
 
 class GameSetup:
     def __init__(self):
-        d1 = Dice()
-        d2 = Dice()
-        d3 = Dice()
-        d4 = Dice()
-        d5 = Dice()
+        dice_values = random.choices(range(1,7), k = 5)
+        d1 = Dice(dice_values[0])
+        d2 = Dice(dice_values[1])
+        d3 = Dice(dice_values[2])
+        d4 = Dice(dice_values[3])
+        d5 = Dice(dice_values[4])
         self.dice = [d1, d2, d3, d4, d5]
 
         s1 = Score1(*self.dice)
@@ -301,8 +297,8 @@ class GameSetup:
         
     def ScoreCalcAll(self):
         class Node:
-            def __init__(self, data):
-                self.data = {"type": type(data), "data": data}
+            def __init__(self, data: ScoreBox):
+                self.data = {"type": type(data), "data": data.ScoreCalc()}
                 self.left = None
                 self.right = None
                 self.count = 1
@@ -310,9 +306,9 @@ class GameSetup:
         def insert(root: Node, data: ScoreBox):
             score = data.ScoreCalc()
             if (root == None):
-                return Node(score)
-            if (root.data["data"] > score):
-                root.left = insert(root.left, data)
+                return Node(data)
+            if (root.data["data"] > score):         # if current node's calculated score is greater than new scorebox's calculated
+                root.left = insert(root.left, data) # score, pass that same scorebox down.
             if (root.data["data"] < score):
                 root.right = insert(root.right, data)
             else:
@@ -332,8 +328,14 @@ class GameSetup:
         bst = None
         for box in self.scores:
             bst = insert(bst, box)
-
         inorder(bst)
 
+class Turn():
+    turn_count = 1
+    def __init__(self):
+        pass
+
+    def new_turn(self):
+        rerolls = 3
 
 

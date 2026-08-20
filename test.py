@@ -150,6 +150,9 @@ def main():
     print("==========TEST GAMESETUP CLASS==========")
 
     game1 = gl.GameSetup()
+    for die in game1.dice:
+        print(die.value, end=" ")
+    print()
     game1.ScoreCalcAll()
 
 
