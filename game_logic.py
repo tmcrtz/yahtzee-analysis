@@ -305,29 +305,35 @@ class GameSetup:
 
         def insert(root: Node, data: ScoreBox):
             score = data.ScoreCalc()
+            #print("score: ", score, " type: ", type(data))
             if (root == None):
+                #print(type(data), " inserted!")
                 return Node(data)
-            if (root.data["data"] > score):         # if current node's calculated score is greater than new scorebox's calculated
+            elif (root.data["data"] > score):         # if current node's calculated score is greater than new scorebox's calculated
+                #print(root.data["type"],"data: ", root.data["data"], " is larger than ", type(data), "data: ", score)
                 root.left = insert(root.left, data) # score, pass that same scorebox down.
-            if (root.data["data"] < score):
+            elif (root.data["data"] < score):
+                #print(root.data["type"],"data: ", root.data["data"], " is smaller than ", type(data), "data: ", score)
                 root.right = insert(root.right, data)
-            else:
+            elif (root.data["data"] == score):
                 root.count += 1                                                 # if multiple scoreboxes have the same score
                 if (type(root.data["type"]) is not set):                        # then we can keep track of which are similar without
                     root.data.update({"type": {root.data["type"], type(data)}}) # making the tree larger
-                else:
-                    root.data["type"].add(type(data))
+                root.data["type"].add(type(data))
+                #print(type(data), " added to node with ", root.data["type"])
             return root
 
         def inorder(root):
             if root:
                 inorder(root.left)
-                print(root.data["data"], root.data["type"])
+                print("data: ", root.data["data"], "count: ", root.count, "type: ", root.data["type"])
                 inorder(root.right)
 
         bst = None
         for box in self.scores:
+            #print("Inserting: ", type(box))
             bst = insert(bst, box)
+            #print()
         inorder(bst)
 
 class Turn():

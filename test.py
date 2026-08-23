@@ -150,10 +150,10 @@ def main():
     print("==========TEST GAMESETUP CLASS==========")
 
     game1 = gl.GameSetup()
+    game1.ScoreCalcAll()
     for die in game1.dice:
         print(die.value, end=" ")
     print()
-    game1.ScoreCalcAll()
 
 
 
